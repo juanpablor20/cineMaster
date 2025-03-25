@@ -1,0 +1,68 @@
+<h1>Formulario de cines</h1>
+<form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()">
+
+    <!-- Campo Nombre -->
+    <div class="form-group">
+        <label for="name">Nombre del Cine:</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ingresa el nombre del Cine"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="cinemaForm.get('name')?.invalid && cinemaForm.get('name')?.touched" class="error-message">
+          <small *ngIf="cinemaForm.get('name')?.errors?.['required']">
+            El nombre es requerido.
+          </small>
+          <small *ngIf="cinemaForm.get('name')?.errors?.['minlength']">
+            El nombre debe tener al menos 3 caracteres.
+          </small>
+        </div>
+    </div>
+
+    <!-- Campo Ubicación -->
+    <div class="form-group">
+        <label for="location">Ubicación:</label>
+        <input
+          id="location"
+          type="text"
+          formControlName="location"
+          placeholder="Ingresa la ubicación del cine"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="cinemaForm.get('location')?.invalid && cinemaForm.get('location')?.touched" class="error-message">
+          <small *ngIf="cinemaForm.get('location')?.errors?.['required']">
+            La ubicación es requerida.
+          </small>
+        </div>
+    </div>
+
+    <!-- Campo URL de Imagen -->
+    <div class="form-group">
+        <label for="imageUrl">URL de la imagen:</label>
+        <input
+          id="imageUrl"
+          type="url"
+          formControlName="imageUrl"
+          placeholder="Ingresa la URL de la imagen del cine"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="cinemaForm.get('imageUrl')?.invalid && cinemaForm.get('imageUrl')?.touched" class="error-message">
+          <small *ngIf="cinemaForm.get('imageUrl')?.errors?.['required']">
+            La URL de la imagen es requerida.
+          </small>
+          <small *ngIf="cinemaForm.get('imageUrl')?.errors?.['pattern']">
+            Por favor ingresa una URL válida.
+          </small>
+        </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <button type="submit" [disabled]="cinemaForm.invalid" class="submit-btn">
+        Guardar Cine
+    </button>
+</form>

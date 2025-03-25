@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ListCinemaComponent } from '../../../components/cinemas/list-cinema/list-cinema.component';
 
 @Component({
   selector: 'app-cinemas',
-  imports: [],
+  imports: [ListCinemaComponent],
   templateUrl: './cinemas.component.html',
   styleUrl: './cinemas.component.css'
 })
-export class CinemasComponent {
+export  default class CinemasComponent {
 
 }

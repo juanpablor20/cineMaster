@@ -1,0 +1,13 @@
+/* sidenav.component.css */
+:host {
+    display: block;
+  }
+  
+  .router-link-active {
+    background-color: #1e40af; /* bg-blue-800 */
+    color: white;
+  }
+  
+  .router-link-active:hover {
+    background-color: #1e3a8a; /* hover effect */
+  }
