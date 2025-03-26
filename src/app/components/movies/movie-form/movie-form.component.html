@@ -1,0 +1,112 @@
+<h1>{{ isEditMode ? "Editar Pelicula" : "Formulario de Peliculas" }}</h1>
+
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="title">Titulo de la Pelicula</label>
+    <input
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="ingresa el Titulo"
+      class="form-contron"
+    />
+
+    <div
+      *ngIf="movieForm.get('title')?.invalid && movieForm.get('title')?.touched"
+      class="error-message"
+    >
+      <small *ngIf="movieForm.get('title')?.errors?.['required']">
+        El titulo es requerido
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="genre">Genero de Pelicula</label>
+    <input
+      id="genre"
+      type="text"
+      formControlName="genre"
+      placeholder="Ingresa el Genero"
+      class="form-control"
+    />
+
+    <div
+      *ngIf="movieForm.get('genre')?.invalid && movieForm.get('genre')?.touched"
+      class="error-message"
+    >
+      <small *ngIf="movieForm.get(genre)?.errors?.['required']">
+        El Genero es requerido
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="duration">Duracion de la Pelicula</label>
+    <input
+      id="duration"
+      type="text"
+      formControlName="duration"
+      placeholder="ingresa la Duracion de la Pelicula"
+      class="form-contron"
+    />
+
+    <div
+      *ngIf="
+        movieForm.get('duration')?.invalid && movieForm.get('duration')?.touched
+      "
+      class="error-message"
+    >
+      <small *ngIf="movieForm.get('duration')?.errors?.['required']">
+        El titulo es requerido
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="imageUrl">URL de la imagen:</label>
+    <input
+      id="imageUrl"
+      type="url"
+      formControlName="imageUrl"
+      placeholder="Ingresa la URL de la imagen"
+      class="form-control"
+    />
+    <!-- Mensajes de validación -->
+    <div
+      *ngIf="
+        movieForm.get('imageUrl')?.invalid && movieForm.get('imageUrl')?.touched
+      "
+      class="error-message"
+    >
+      <small *ngIf="movieForm.get('imageUrl')?.errors?.['required']">
+        La URL de la imagen es requerida.
+      </small>
+      <small *ngIf="movieForm.get('imageUrl')?.errors?.['pattern']">
+        Por favor ingresa una URL válida.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="videoUrl">URL del video:</label>
+    <input
+      id="videoUrl"
+      type="url"
+      formControlName="videoUrl"
+      placeholder="Ingresa la URL del video"
+      class="form-control"
+    />
+    <!-- Mensajes de validación -->
+    <div
+      *ngIf="
+        movieForm.get('videoUrl')?.invalid && movieForm.get('videoUrl')?.touched
+      "
+      class="error-message"
+    >
+      <small *ngIf="movieForm.get('videoUrl')?.errors?.['required']">
+        La URL de la imagen es requerida.
+      </small>
+      <small *ngIf="movieForm.get('videoUrl')?.errors?.['pattern']">
+        Por favor ingresa una URL válida.
+      </small>
+    </div>
+  </div>
+</form>
