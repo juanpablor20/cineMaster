@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppSettings } from '../setting/AppSetting';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Cinema } from '../interface/cinemas';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class CinemaService {
   constructor(private http: HttpClient) { }
 
 
-  getCinemas(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cinemas`);
+  getCinemas(): Observable<Cinema[]> {
+    return this.http.get<Cinema[]>(`${this.baseUrl}cinemas`);
   }
 
   // GET con parámetros
   getCinemaById(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cinemas/${id}`);
+    return this.http.get(`${this.baseUrl}cinemas/${id}`);
   }
 
   // GET con query params
@@ -31,7 +32,7 @@ export class CinemaService {
   // Método POST
   createCinema(cinemaData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.baseUrl}/cinemas`, cinemaData, { headers });
+    return this.http.post(`${this.baseUrl}cinemas`, cinemaData, { headers });
   }
 
   // Método PATCH (actualización parcial)
@@ -48,7 +49,7 @@ export class CinemaService {
 
   // Método DELETE
   deleteCinema(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/cinemas/${id}`);
+    return this.http.delete(`${this.baseUrl}cinemas/${id}`);
   }
 
 }

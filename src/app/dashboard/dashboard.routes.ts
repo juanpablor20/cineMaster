@@ -24,6 +24,12 @@ export const DASHBOARD_ROUTES: Routes = [
                 title: 'crear Cine',
                 loadComponent: () => import('../components/cinemas/form/form.component'),
             },
+            {
+                path: 'editar-cine/:id',
+                title: 'editar Cine',
+                loadComponent: () => import('../components/cinemas/form/form.component'),
+            },
+            
 
             {
                 path: 'cinemas',

@@ -31,7 +31,7 @@ export class LoginComponent {
       this.errorMessage = null;
       this.loginService.login(credentials).subscribe({
         next: (response) => {
-          this.loginService.saveToken(response.token);
+          this.loginService.saveToken(response.access_token);
           this.router.navigate(['/dashboard']); 
         },
         error: (error) => {

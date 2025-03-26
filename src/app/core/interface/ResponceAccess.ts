@@ -1,3 +1,3 @@
 export interface ResponceAccess {
-    token: string;
+    access_token: string;
 }

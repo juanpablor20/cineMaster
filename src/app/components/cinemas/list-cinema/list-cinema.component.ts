@@ -21,8 +21,9 @@ export class ListCinemaComponent implements OnInit {
 
   loadCinemas(): void {
     this.cinemaService.getCinemas().subscribe({
-      next: (response) => {
-        this.cinemas = response.data; // Ajusta según la estructura de tu API
+      next: (response: any) => {
+        // Verifica si la respuesta es un array o está dentro de una propiedad data
+        this.cinemas = Array.isArray(response) ? response : response.data || response.results || [];
         this.isLoading = false;
       },
       error: (error) => {

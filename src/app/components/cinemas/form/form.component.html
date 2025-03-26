@@ -1,4 +1,4 @@
-<h1>Formulario de cines</h1>
+<h1>{{ isEditMode ? 'Editar Cine' : 'Formulario de Cines' }}</h1>
 <form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()">
 
     <!-- Campo Nombre -->
@@ -63,6 +63,12 @@
 
     <!-- Botón de envío -->
     <button type="submit" [disabled]="cinemaForm.invalid" class="submit-btn">
-        Guardar Cine
+        {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
     </button>
+    
+    <!-- Botón para cancelar/volver -->
+     <a routerLink="/dashboard/cinemas" class="cancel-btn">
+        Volver
+    </a>
+    
 </form>

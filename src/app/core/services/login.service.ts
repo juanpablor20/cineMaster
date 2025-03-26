@@ -27,8 +27,8 @@ export class LoginService {
   }
 
   // Guardar el token en el localStorage
-  saveToken(token: string): void {
-    localStorage.setItem('token', token);
+  saveToken(access_token: string): void {
+    localStorage.setItem('token', access_token);
   }
 
   // Obtener el token del localStorage
