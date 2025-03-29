@@ -1,0 +1,75 @@
+<h1>{{ isEditMode ? "Editar Pelicula" : "Formulario de Peliculas" }}</h1>
+
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Nombre de la Sala</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="ingresa el nombre de la Sala"
+      class="form-contron"
+    />
+
+    <div
+      *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched"
+      class="error-message"
+    >
+      <small *ngIf="roomForm.get('name')?.errors?.['required']">
+        El titulo es requerido
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="capacity">Capacidad de la sala</label>
+    <input
+      id="capacity"
+      type="text"
+      formControlName="capacity"
+      placeholder="Ingresa la Capacidad dela sala"
+      class="form-control"
+    />
+
+    <div
+      *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched"
+      class="error-message"
+    >
+      <small *ngIf="roomForm.get('capacity')?.errors?.['required']">
+        El Genero es requerido
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="cinemaId">cine id</label>
+    <input
+      id="cinemaId"
+      type="text"
+      formControlName="cinemaId"
+      placeholder="ingresa el id"
+      class="form-contron"
+    />
+
+    <div
+      *ngIf="
+        roomForm.get('cinemaId')?.invalid && roomForm.get('cinemaId')?.touched
+      "
+      class="error-message"
+    >
+      <small *ngIf="roomForm.get('cinemaId')?.errors?.['required']">
+        El titulo es requerido
+      </small>
+    </div>
+  </div>
+ 
+
+  
+
+  <button type="submit" [disabled]="roomForm.invalid" class="submit-btn">
+    {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
+</button>
+
+<!-- Botón para cancelar/volver -->
+ <a routerLink="/dashboard/salas" class="cancel-btn">
+    Volver
+</a>
+</form>

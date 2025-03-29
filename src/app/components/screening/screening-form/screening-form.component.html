@@ -1,0 +1,71 @@
+<h1>{{ isEditMode ? 'Editar Cine' : 'Formulario de Cines' }}</h1>
+<form [formGroup]="screeningForm" (ngSubmit)="onSubmit()">
+
+    <!-- Campo Nombre -->
+    <div class="form-group">
+        <label for="  screeningTime">Fecha:</label>
+        <input
+          id="  screeningTime"
+          type="text"
+          formControlName="screeningTime"
+          placeholder="Ingresa la fecha de proyeccion"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="  screeningForm.get('screeningTime')?.invalid &&   screeningForm.get('screeningTime')?.touched" class="error-message">
+          <small *ngIf="  screeningForm.get('screeningTime')?.errors?.['required']">
+            El nombre es requerido.
+          </small>
+          <small *ngIf="  screeningForm.get('screeningTime')?.errors?.['minlength']">
+            El nombre debe tener al menos 3 caracteres.
+          </small>
+        </div>
+    </div>
+
+    <!-- Campo Ubicación -->
+    <div class="form-group">
+        <label for="movieId">id pelicula:</label>
+        <input
+          id="  movieId"
+          type="text"
+          formControlName="movieId"
+          placeholder="Ingresa el id de la pelicula"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="  screeningForm.get('movieId')?.invalid &&   screeningForm.get('movieId')?.touched" class="error-message">
+          <small *ngIf="  screeningForm.get('movieId')?.errors?.['required']">
+            La ubicación es requerida.
+          </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="movieId">id de la sala:</label>
+        <input
+          id="  roomId"
+          type="text"
+          formControlName="roomId"
+          placeholder="Ingresa el id de la sala"
+          class="form-control"
+        />
+        <!-- Mensajes de validación -->
+        <div *ngIf="  screeningForm.get('roomId')?.invalid &&   screeningForm.get('roomId')?.touched" class="error-message">
+          <small *ngIf="  screeningForm.get('roomId')?.errors?.['required']">
+            La sala id es requerida.
+          </small>
+        </div>
+    </div>
+
+   
+
+    <!-- Botón de envío -->
+    <button type="submit" [disabled]="screeningForm.invalid" class="submit-btn">
+        {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
+    </button>
+    
+    <!-- Botón para cancelar/volver -->
+     <a routerLink="/dashboard/screening" class="cancel-btn">
+        Volver
+    </a>
+    
+</form>

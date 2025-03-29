@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Cinema } from '../../../core/interface/cinemas';
 import { CinemaService } from '../../../core/services/cinema.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-list-cinema',
@@ -13,7 +14,9 @@ export class ListCinemaComponent implements OnInit {
   cinemas: Cinema[] = [];
   isLoading: boolean = true;
 
-  constructor(private cinemaService: CinemaService) {}
+  constructor(private cinemaService: CinemaService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.loadCinemas();
@@ -37,6 +40,7 @@ export class ListCinemaComponent implements OnInit {
     if(confirm('¿Estás seguro de eliminar este cine?')) {
       this.cinemaService.deleteCinema(id).subscribe({
         next: () => {
+          this.toastService.success('Usuario Eliminado correctamente');
           this.cinemas = this.cinemas.filter(cinema => cinema.id !== id);
         },
         error: (error) => {

@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Movie } from '../../../core/interface/movies.interface';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-movie-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './movie-form.component.html',
   styleUrl: './movie-form.component.css'
 })

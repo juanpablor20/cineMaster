@@ -34,7 +34,7 @@
       *ngIf="movieForm.get('genre')?.invalid && movieForm.get('genre')?.touched"
       class="error-message"
     >
-      <small *ngIf="movieForm.get(genre)?.errors?.['required']">
+      <small *ngIf="movieForm.get('genre')?.errors?.['required']">
         El Genero es requerido
       </small>
     </div>
@@ -109,4 +109,13 @@
       </small>
     </div>
   </div>
+
+  <button type="submit" [disabled]="movieForm.invalid" class="submit-btn">
+    {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
+</button>
+
+<!-- Botón para cancelar/volver -->
+ <a routerLink="/dashboard/peliculas" class="cancel-btn">
+    Volver
+</a>
 </form>

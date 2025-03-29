@@ -12,6 +12,12 @@ export const DASHBOARD_ROUTES: Routes = [
         loadComponent: () => import('./pages/users/users.component'),
       },
       {
+        path: 'cinemas',
+        title: 'cines',
+        //   icon: 'ri-movie-2-line',
+        loadComponent: () => import('./pages/cinemas/cinemas.component'),
+      },
+      {
         path: 'crear-cine',
         title: 'crear Cine',
         loadComponent: () =>
@@ -30,12 +36,7 @@ export const DASHBOARD_ROUTES: Routes = [
           import('../components/movies/movie-form/movie-form.component'),
       },
 
-      {
-        path: 'cinemas',
-        title: 'cines',
-        //   icon: 'ri-movie-2-line',
-        loadComponent: () => import('./pages/cinemas/cinemas.component'),
-      },
+      
       {
         path: 'peliculas',
         title: 'peliculas',
@@ -47,6 +48,38 @@ export const DASHBOARD_ROUTES: Routes = [
         loadComponent: () =>
           import('../components/movies/movie-form/movie-form.component'),
       },
+      {
+        path: 'salas',
+        title: 'Salas',
+        loadComponent: () => import('./pages/rooms/rooms.component'),
+      },
+      {
+        path: 'crear-salas',
+        title: 'Crear salas',
+        loadComponent: () => 
+          import('../components/rooms/room-form/room-form.component')
+      },
+      {
+        path: 'editar-sala/:id',
+        title: 'Editar sala',
+        loadComponent: () => 
+          import('../components/rooms/room-form/room-form.component')
+      },
+      {
+        path: 'screening',
+        title: 'Proyecciones',
+        loadComponent: () => import('./pages/screening/screening.component'),
+      },
+      {
+        path: 'crear-screening',
+        title: 'Crear Proyeccion',
+        loadComponent: () => import('../components/screening/screening-form/screening-form.component'),
+      },
+      {
+        path: 'editar-screening/:id',
+        title: 'Editar Proyeccion',
+        loadComponent: () => import('../components/screening/screening-form/screening-form.component'),
+      }
     ],
   },
 ];

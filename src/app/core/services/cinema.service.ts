@@ -38,7 +38,7 @@ export class CinemaService {
   // Método PATCH (actualización parcial)
   updateCinema(id: string, partialUpdate: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.patch(`${this.baseUrl}/cinemas/${id}`, partialUpdate, { headers });
+    return this.http.patch(`${this.baseUrl}cinemas/${id}`, partialUpdate, { headers });
   }
 
   // Método PUT (actualización completa)

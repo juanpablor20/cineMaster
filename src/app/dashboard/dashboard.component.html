@@ -1,18 +1,27 @@
 <!-- En tu componente principal -->
-<div class="flex bg-slate-100 h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white">
-    <!-- Sidenav -->
-    <app-sidenav [isOpen]="isSidenavOpen"></app-sidenav>
-  
-    <!-- Contenido principal -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-      <!-- Navbar -->
-      <app-navbar (toggleSidenav)="isSidenavOpen = !isSidenavOpen"></app-navbar>
-  
-      <!-- Contenido del dashboard -->
-      <main class="flex-1 overflow-y-auto bg-gray-200 p-6">
-        <div class="text-black px-1 mt-2 w-full">
-          <router-outlet />
-        </div>
-      </main>
-    </div>
+<div
+  class="flex bg-slate-100 h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
+>
+  <!-- Sidenav -->
+  <app-sidenav [isOpen]="isSidenavOpen"></app-sidenav>
+
+  <!-- Contenido principal -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Navbar -->
+    <app-navbar (toggleSidenav)="isSidenavOpen = !isSidenavOpen"></app-navbar>
+
+    <!-- Contenido del dashboard -->
+    <main class="flex-1 overflow-y-auto bg-gray-200 p-6">
+      <div class="text-black px-1 mt-2 w-full">
+        <app-toast
+          *ngIf="toast.message"
+          [message]="toast.message"
+          [type]="toast.type"
+          (closed)="onToastClosed()"
+        >
+        </app-toast>
+        <router-outlet />
+      </div>
+    </main>
   </div>
+</div>

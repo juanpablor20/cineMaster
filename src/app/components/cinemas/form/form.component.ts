@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CinemaService } from '../../../core/services/cinema.service';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-form',
@@ -22,7 +23,8 @@ export default class FormComponent implements OnInit {
     private fb: FormBuilder,
     private cinemaService: CinemaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {
     this.cinemaForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,7 +59,8 @@ export default class FormComponent implements OnInit {
         // Modo edición
         this.cinemaService.updateCinema(this.currentCinemaId, cinemaData).subscribe({
           next: (response) => {
-            console.log('Cine actualizado exitosamente:', response);
+            
+            this.toastService.success('Usuario Editado correctamente');
             this.router.navigate(['/dashboard/cinemas']);
           },
           error: (error) => {
@@ -69,12 +72,14 @@ export default class FormComponent implements OnInit {
         // Modo creación
         this.cinemaService.createCinema(cinemaData).subscribe({
           next: (response) => {
-            console.log('Cine creado exitosamente:', response);
+            
+            this.toastService.success('Usuario creado correctamente');
             this.router.navigate(['/dashboard/cinemas']);
             this.cinemaForm.reset();
           },
           error: (error) => {
             console.error('Error al crear el cine:', error);
+            this.toastService.error('Usuario creado correctamente');
             alert(`Error: ${error.message || 'No se pudo crear el cine'}`);
           }
         });
