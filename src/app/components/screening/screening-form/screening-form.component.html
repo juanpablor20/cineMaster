@@ -22,38 +22,50 @@
         </div>
     </div>
 
-    <!-- Campo Ubicación -->
     <div class="form-group">
-        <label for="movieId">id pelicula:</label>
-        <input
-          id="  movieId"
-          type="text"
-          formControlName="movieId"
-          placeholder="Ingresa el id de la pelicula"
-          class="form-control"
-        />
-        <!-- Mensajes de validación -->
-        <div *ngIf="  screeningForm.get('movieId')?.invalid &&   screeningForm.get('movieId')?.touched" class="error-message">
-          <small *ngIf="  screeningForm.get('movieId')?.errors?.['required']">
-            La ubicación es requerida.
-          </small>
-        </div>
+      <label for="roomId">Sala</label>
+      <select 
+        id="roomId" 
+        formControlName="roomId" 
+        class="form-control"
+      >
+        <option value="">Seleccione una sala</option>
+        <option *ngFor="let room of rooms" [value]="room.id">
+          {{ room.name }}
+        </option>
+      </select>
+    
+      <div 
+        *ngIf="screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched" 
+        class="error-message"
+      >
+        <small *ngIf="screeningForm.get('roomId')?.errors?.['required']">
+          la sala  es requerido
+        </small>
+      </div>
     </div>
+    
     <div class="form-group">
-        <label for="movieId">id de la sala:</label>
-        <input
-          id="  roomId"
-          type="text"
-          formControlName="roomId"
-          placeholder="Ingresa el id de la sala"
-          class="form-control"
-        />
-        <!-- Mensajes de validación -->
-        <div *ngIf="  screeningForm.get('roomId')?.invalid &&   screeningForm.get('roomId')?.touched" class="error-message">
-          <small *ngIf="  screeningForm.get('roomId')?.errors?.['required']">
-            La sala id es requerida.
-          </small>
-        </div>
+      <label for="movieId">Titulo de la Peilicula</label>
+      <select 
+        id="movieId" 
+        formControlName="movieId" 
+        class="form-control"
+      >
+        <option value="">Seleccione una Pelicula</option>
+        <option *ngFor="let movie of movies" [value]="movie.id">
+          {{ movie.title }}
+        </option>
+      </select>
+    
+      <div 
+        *ngIf="screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched" 
+        class="error-message"
+      >
+        <small *ngIf="screeningForm.get('movieId')?.errors?.['required']">
+          El cine es requerido
+        </small>
+      </div>
     </div>
 
    

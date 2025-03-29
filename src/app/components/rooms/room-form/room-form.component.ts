@@ -5,6 +5,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Rooms } from '../../../core/interface/rooms.interface';
 import { CommonModule } from '@angular/common';
+import { Cinema } from '../../../core/interface/cinemas';
+import { CinemaService } from '../../../core/services/cinema.service';
 
 @Component({
   selector: 'app-room-form',
@@ -15,6 +17,8 @@ import { CommonModule } from '@angular/common';
 export default class RoomFormComponent {
 
   roomForm: FormGroup;
+  cinemas: Cinema[] = [];
+
   isEditMode: boolean = false;
   currentRoomId: string | null = null;
 
@@ -22,7 +26,8 @@ export default class RoomFormComponent {
     private fb: FormBuilder,
     private roomService: RoomsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cinemaService: CinemaService
 
   ) {
     this.roomForm = this.fb.group({
@@ -34,6 +39,11 @@ export default class RoomFormComponent {
 
   
    ngOnInit(): void {
+
+    
+    this.cinemaService.getCinemas().subscribe((cines => this.cinemas = cines));
+      
+    
       this.route.paramMap.pipe(
         switchMap(params => {
           const id = params.get('id');
@@ -52,6 +62,8 @@ export default class RoomFormComponent {
   
       });
     }
+    
+    
 
      onSubmit(): void {
           if(this.roomForm.valid){

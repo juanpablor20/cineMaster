@@ -5,39 +5,35 @@ import { Observable } from 'rxjs';
 import { Movie } from '../interface/movies.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MoviesService {
-
   private baseUrl: string = AppSettings.ApiUrl;
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-
-  getMovie(): Observable<Movie[]>{
+  getMovie(): Observable<Movie[]> {
     return this.http.get<Movie[]>(`${this.baseUrl}movies`);
   }
 
-  getMovieById(id: string): Observable<any>{
+  getMovieById(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}movies/${id}`);
   }
 
-  createMovie(movieData: any): Observable<any>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this.http.post(`${this.baseUrl}movies`, movieData, {headers});
+  createMovie(movieData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${this.baseUrl}movies/create`, movieData, {
+      headers,
+    });
   }
-   updateMovie(id: string, cinemaData: any): Observable<any>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this.http.patch(`${this.baseUrl}movies/${id}`, cinemaData, {headers});
-   }
+  updateMovie(id: string, cinemaData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.patch(`${this.baseUrl}movies/${id}`, cinemaData, {
+      headers,
+    });
+  }
 
-  deleteMovie(id: string): Observable<any>{
+  deleteMovie(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}movies/${id}`);
   }
-
-
-
-  
-    
 }

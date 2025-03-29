@@ -31,7 +31,9 @@
     />
 
     <div
-      *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched"
+      *ngIf="
+        roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched
+      "
       class="error-message"
     >
       <small *ngIf="roomForm.get('capacity')?.errors?.['required']">
@@ -40,14 +42,13 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="cinemaId">cine id</label>
-    <input
-      id="cinemaId"
-      type="text"
-      formControlName="cinemaId"
-      placeholder="ingresa el id"
-      class="form-contron"
-    />
+    <label for="cinemaId">Cine</label>
+    <select id="cinemaId" formControlName="cinemaId" class="form-control">
+      <option value="">Seleccione un cine</option>
+      <option *ngFor="let cine of cinemas" [value]="cine.id">
+        {{ cine.name }}
+      </option>
+    </select>
 
     <div
       *ngIf="
@@ -56,20 +57,15 @@
       class="error-message"
     >
       <small *ngIf="roomForm.get('cinemaId')?.errors?.['required']">
-        El titulo es requerido
+        El cine es requerido
       </small>
     </div>
   </div>
- 
-
-  
 
   <button type="submit" [disabled]="roomForm.invalid" class="submit-btn">
-    {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
-</button>
+    {{ isEditMode ? "Actualizar Cine" : "Guardar Cine" }}
+  </button>
 
-<!-- Botón para cancelar/volver -->
- <a routerLink="/dashboard/salas" class="cancel-btn">
-    Volver
-</a>
+  <!-- Botón para cancelar/volver -->
+  <a routerLink="/dashboard/salas" class="cancel-btn"> Volver </a>
 </form>

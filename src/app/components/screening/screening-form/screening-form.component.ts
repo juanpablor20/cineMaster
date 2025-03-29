@@ -5,6 +5,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { Movie } from '../../../core/interface/movies.interface';
+import { MoviesService } from '../../../core/services/movies.service';
+import { Rooms } from '../../../core/interface/rooms.interface';
+import { RoomsService } from '../../../core/services/rooms.service';
 
 
 @Component({
@@ -16,6 +20,8 @@ import { switchMap } from 'rxjs';
 export default class ScreeningFormComponent {
 
   screeningForm: FormGroup;
+  rooms: Rooms [] = [];
+  movies: Movie [] = [];
 
   isEditMode = false;
   currentScreeningId: string | null = null;
@@ -24,7 +30,10 @@ export default class ScreeningFormComponent {
     private fb: FormBuilder,
     private screeningService: ScreeningService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private moviesService: MoviesService,
+    private roomsService: RoomsService
+    
   ){
     this.screeningForm = this.fb.group({
       screeningTime: ['', Validators.required],
@@ -38,6 +47,12 @@ export default class ScreeningFormComponent {
   
 
    ngOnInit(): void {
+    this.moviesService.getMovie().subscribe((movies => {
+      this.movies= movies;
+    }));
+    this.roomsService.getRooms().subscribe((rooms => {
+      this.rooms = rooms;
+    }));
       this.route.paramMap.pipe(
         switchMap(params => {
           const id = params.get('id');
