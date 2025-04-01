@@ -1,13 +1,38 @@
-/* sidenav.component.css */
-:host {
-    display: block;
+/* Estilos para links activos */
+.router-link-active {
+  background-color: #1e40af;
+  color: white;
+  font-weight: 500;
+}
+
+.router-link-active:hover {
+  background-color: #1e3a8a;
+}
+
+/* Estados del sidenav */
+.sidenav-visible {
+  transform: translateX(0);
+  opacity: 1;
+  display: block;
+}
+
+.sidenav-hidden {
+  transform: translateX(-100%);
+  opacity: 0;
+  display: none;
+}
+
+/* Transiciones */
+.sidenav-container {
+  transition: 
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+/* Mejoras para mobile */
+@media (max-width: 768px) {
+  .sidenav-hidden {
+    transform: translateX(-100%);
   }
-  
-  .router-link-active {
-    background-color: #1e40af; /* bg-blue-800 */
-    color: white;
-  }
-  
-  .router-link-active:hover {
-    background-color: #1e3a8a; /* hover effect */
-  }
+}

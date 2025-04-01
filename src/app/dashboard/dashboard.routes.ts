@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 
 export const DASHBOARD_ROUTES: Routes = [
+
+  
   {
     path: '',
     loadComponent: () => import('./dashboard.component'),
@@ -8,8 +10,8 @@ export const DASHBOARD_ROUTES: Routes = [
       {
         path: 'usuarios',
         title: 'usuarios',
-        //   icon: 'ri-user-line',
-        loadComponent: () => import('./pages/users/users.component'),
+        //icon: 'ri-user-line',
+     loadComponent: () => import('./pages/users/users.component'),
       },
       {
         path: 'cinemas',

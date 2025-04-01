@@ -1,6 +1,5 @@
-// navbar.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,23 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  @Input() isSidenavOpen: boolean = true; 
   @Output() toggleSidenav = new EventEmitter<void>();
-  
-  isSearchOpen = false;
   isProfileMenuOpen = false;
 
   constructor(private router: Router) {}
-
-  toggleSearch() {
-    this.isSearchOpen = !this.isSearchOpen;
-  }
 
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
   }
 
   logout() {
-    // Implementa tu lógica de logout aquí
     this.router.navigate(['/login']);
   }
 

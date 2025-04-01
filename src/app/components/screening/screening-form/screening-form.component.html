@@ -1,83 +1,126 @@
-<h1>{{ isEditMode ? 'Editar Cine' : 'Formulario de Cines' }}</h1>
-<form [formGroup]="screeningForm" (ngSubmit)="onSubmit()">
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    <!-- Header -->
+    <div class="bg-indigo-600 px-6 py-4">
+      <h2 class="text-2xl font-bold text-white">
+        {{ isEditMode ? 'Editar Proyección' : 'Nueva Proyección' }}
+      </h2>
+    </div>
 
-    <!-- Campo Nombre -->
-    <div class="form-group">
-        <label for="  screeningTime">Fecha:</label>
-        <input
-          id="  screeningTime"
-          type="text"
-          formControlName="screeningTime"
-          placeholder="Ingresa la fecha de proyeccion"
-          class="form-control"
-        />
-        <!-- Mensajes de validación -->
-        <div *ngIf="  screeningForm.get('screeningTime')?.invalid &&   screeningForm.get('screeningTime')?.touched" class="error-message">
-          <small *ngIf="  screeningForm.get('screeningTime')?.errors?.['required']">
-            El nombre es requerido.
-          </small>
-          <small *ngIf="  screeningForm.get('screeningTime')?.errors?.['minlength']">
-            El nombre debe tener al menos 3 caracteres.
-          </small>
+    <!-- Form Content -->
+    <div class="p-6">
+      @if (isLoading) {
+        <div class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
         </div>
-    </div>
+      } @else {
+        <form [formGroup]="screeningForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <!-- Date and Time Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Date Field -->
+            <div>
+              <label for="screeningDate" class="block text-sm font-medium text-gray-700 mb-1">
+                Fecha de proyección <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                id="screeningDate"
+                formControlName="screeningDate"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-500]="screeningForm.get('screeningDate')?.invalid && screeningForm.get('screeningDate')?.touched"
+              >
+              @if (screeningForm.get('screeningDate')?.invalid && screeningForm.get('screeningDate')?.touched) {
+                <p class="mt-1 text-sm text-red-600">La fecha es requerida</p>
+              }
+            </div>
 
-    <div class="form-group">
-      <label for="roomId">Sala</label>
-      <select 
-        id="roomId" 
-        formControlName="roomId" 
-        class="form-control"
-      >
-        <option value="">Seleccione una sala</option>
-        <option *ngFor="let room of rooms" [value]="room.id">
-          {{ room.name }}
-        </option>
-      </select>
-    
-      <div 
-        *ngIf="screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched" 
-        class="error-message"
-      >
-        <small *ngIf="screeningForm.get('roomId')?.errors?.['required']">
-          la sala  es requerido
-        </small>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="movieId">Titulo de la Peilicula</label>
-      <select 
-        id="movieId" 
-        formControlName="movieId" 
-        class="form-control"
-      >
-        <option value="">Seleccione una Pelicula</option>
-        <option *ngFor="let movie of movies" [value]="movie.id">
-          {{ movie.title }}
-        </option>
-      </select>
-    
-      <div 
-        *ngIf="screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched" 
-        class="error-message"
-      >
-        <small *ngIf="screeningForm.get('movieId')?.errors?.['required']">
-          El cine es requerido
-        </small>
-      </div>
-    </div>
+            <!-- Time Field -->
+            <div>
+              <label for="screeningTime" class="block text-sm font-medium text-gray-700 mb-1">
+                Hora de proyección <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="time"
+                id="screeningTime"
+                formControlName="screeningTime"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                [class.border-red-500]="screeningForm.get('screeningTime')?.invalid && screeningForm.get('screeningTime')?.touched"
+              >
+              @if (screeningForm.get('screeningTime')?.invalid && screeningForm.get('screeningTime')?.touched) {
+                <p class="mt-1 text-sm text-red-600">La hora es requerida</p>
+              }
+            </div>
+          </div>
 
-   
+          <!-- Movie Field -->
+          <div>
+            <label for="movieId" class="block text-sm font-medium text-gray-700 mb-1">
+              Película <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="movieId"
+              formControlName="movieId"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-500]="screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched"
+            >
+              <option value="">Seleccione una película</option>
+              @for (movie of movies; track movie.id) {
+                <option [value]="movie.id">{{ movie.title }}</option>
+              }
+            </select>
+            @if (screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched) {
+              <p class="mt-1 text-sm text-red-600">La película es requerida</p>
+            }
+          </div>
 
-    <!-- Botón de envío -->
-    <button type="submit" [disabled]="screeningForm.invalid" class="submit-btn">
-        {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
-    </button>
-    
-    <!-- Botón para cancelar/volver -->
-     <a routerLink="/dashboard/screening" class="cancel-btn">
-        Volver
-    </a>
-    
-</form>
+          <!-- Room Field -->
+          <div>
+            <label for="roomId" class="block text-sm font-medium text-gray-700 mb-1">
+              Sala <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="roomId"
+              formControlName="roomId"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              [class.border-red-500]="screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched"
+            >
+              <option value="">Seleccione una sala</option>
+              @for (room of rooms; track room.id) {
+                <option [value]="room.id">{{ room.name }}</option>
+              }
+            </select>
+            @if (screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched) {
+              <p class="mt-1 text-sm text-red-600">La sala es requerida</p>
+            }
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end space-x-3 pt-4">
+            <a
+              routerLink="/dashboard/screening"
+              class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Volver
+            </a>
+            
+            <button
+              type="submit"
+              [disabled]="screeningForm.invalid || isSubmitting"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              @if (isSubmitting) {
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Procesando...
+              } @else {
+                {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+              }
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+</div>

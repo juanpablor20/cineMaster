@@ -15,21 +15,21 @@ export class ScreeningService {
 
 
   getScreening(): Observable<Screening[]>{
-    return this.http.get<Screening[]>(`${this.baseUrl}screening`);
+    return this.http.get<Screening[]>(`${this.baseUrl}screenings`);
   }
   getScreeningById(id: string): Observable<any>{
-    return this.http.get(`${this.baseUrl}screening/${id}`);
+    return this.http.get(`${this.baseUrl}screenings/${id}`);
   }  
   
    createScreening(screeningData: any): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this.http.post(`${this.baseUrl}screening`, screeningData, {headers});
+    return this.http.post(`${this.baseUrl}screenings`, screeningData, {headers});
   }
   updateScreening(id: string, cinemaData: any): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this.http.patch(`${this.baseUrl}screening/${id}`, cinemaData, {headers});
+    return this.http.patch(`${this.baseUrl}screenings/${id}`, cinemaData, {headers});
   }
   deleteScreening(id: string): Observable<any>{
-    return this.http.delete(`${this.baseUrl}screening/${id}`);
+    return this.http.delete(`${this.baseUrl}screenings/${id}`);
   }
 }
