@@ -1,6 +1,21 @@
+<div class="video-hero">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">CineFlix</div>
+    <div class="nav-links">
+      <a (click)="changeVideo('accion')">Acción</a>
+      <a (click)="changeVideo('drama')">Drama</a>
+      <a (click)="changeVideo('terror')">Terror</a>
+      <a (click)="changeVideo('infantil')">Infantil</a>
+      <a href="#">Login</a>
+    </div>
+  </nav>
 
+  <!-- Video Dinámico -->
+  <video #videoPlayer autoplay muted loop [src]="currentVideoUrl" class="video-bg"></video>
 
-
-
-
-<a routerLink="/login">Ir a el login</a>
+  <!-- Overlay con título -->
+  <div class="video-overlay">
+    <h1>{{ currentVideoTitle }}</h1>
+  </div>
+</div>

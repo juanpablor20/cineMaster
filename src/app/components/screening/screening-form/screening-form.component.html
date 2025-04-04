@@ -1,126 +1,223 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-    <!-- Header -->
-    <div class="bg-indigo-600 px-6 py-4">
-      <h2 class="text-2xl font-bold text-white">
-        {{ isEditMode ? 'Editar Proyección' : 'Nueva Proyección' }}
-      </h2>
-    </div>
-
-    <!-- Form Content -->
-    <div class="p-6">
-      @if (isLoading) {
-        <div class="flex justify-center items-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+<div class="p-5">
+  <!-- Stepper -->
+  <div class="mx-4 p-4">
+    <div class="flex items-center">
+      <div class="flex items-center text-teal-600 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600 flex items-center justify-center"
+        >
+          <i class="ri-calendar-event-line ri-xl"></i>
         </div>
-      } @else {
-        <form [formGroup]="screeningForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <!-- Date and Time Row -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Date Field -->
-            <div>
-              <label for="screeningDate" class="block text-sm font-medium text-gray-700 mb-1">
-                Fecha de proyección <span class="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                id="screeningDate"
-                formControlName="screeningDate"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                [class.border-red-500]="screeningForm.get('screeningDate')?.invalid && screeningForm.get('screeningDate')?.touched"
-              >
-              @if (screeningForm.get('screeningDate')?.invalid && screeningForm.get('screeningDate')?.touched) {
-                <p class="mt-1 text-sm text-red-600">La fecha es requerida</p>
-              }
-            </div>
-
-            <!-- Time Field -->
-            <div>
-              <label for="screeningTime" class="block text-sm font-medium text-gray-700 mb-1">
-                Hora de proyección <span class="text-red-500">*</span>
-              </label>
-              <input
-                type="time"
-                id="screeningTime"
-                formControlName="screeningTime"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                [class.border-red-500]="screeningForm.get('screeningTime')?.invalid && screeningForm.get('screeningTime')?.touched"
-              >
-              @if (screeningForm.get('screeningTime')?.invalid && screeningForm.get('screeningTime')?.touched) {
-                <p class="mt-1 text-sm text-red-600">La hora es requerida</p>
-              }
-            </div>
-          </div>
-
-          <!-- Movie Field -->
-          <div>
-            <label for="movieId" class="block text-sm font-medium text-gray-700 mb-1">
-              Película <span class="text-red-500">*</span>
-            </label>
-            <select
-              id="movieId"
-              formControlName="movieId"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              [class.border-red-500]="screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched"
-            >
-              <option value="">Seleccione una película</option>
-              @for (movie of movies; track movie.id) {
-                <option [value]="movie.id">{{ movie.title }}</option>
-              }
-            </select>
-            @if (screeningForm.get('movieId')?.invalid && screeningForm.get('movieId')?.touched) {
-              <p class="mt-1 text-sm text-red-600">La película es requerida</p>
-            }
-          </div>
-
-          <!-- Room Field -->
-          <div>
-            <label for="roomId" class="block text-sm font-medium text-gray-700 mb-1">
-              Sala <span class="text-red-500">*</span>
-            </label>
-            <select
-              id="roomId"
-              formControlName="roomId"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              [class.border-red-500]="screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched"
-            >
-              <option value="">Seleccione una sala</option>
-              @for (room of rooms; track room.id) {
-                <option [value]="room.id">{{ room.name }}</option>
-              }
-            </select>
-            @if (screeningForm.get('roomId')?.invalid && screeningForm.get('roomId')?.touched) {
-              <p class="mt-1 text-sm text-red-600">La sala es requerida</p>
-            }
-          </div>
-
-          <!-- Buttons -->
-          <div class="flex justify-end space-x-3 pt-4">
-            <a
-              routerLink="/dashboard/screening"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Volver
-            </a>
-            
-            <button
-              type="submit"
-              [disabled]="screeningForm.invalid || isSubmitting"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              @if (isSubmitting) {
-                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Procesando...
-              } @else {
-                {{ isEditMode ? 'Actualizar' : 'Guardar' }}
-              }
-            </button>
-          </div>
-        </form>
-      }
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-teal-600"
+        >
+          Fecha/Hora
+        </div>
+      </div>
+      <div
+        class="flex-auto border-t-2 transition duration-500 ease-in-out border-teal-600"
+      ></div>
+      <div class="flex items-center text-gray-500 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center"
+        >
+          <i class="ri-movie-line ri-xl"></i>
+        </div>
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
+        >
+          Película
+        </div>
+      </div>
+      <div
+        class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"
+      ></div>
+      <div class="flex items-center text-gray-500 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center"
+        >
+          <i class="ri-door-line ri-xl"></i>
+        </div>
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
+        >
+          Sala
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="mt-8 p-4">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+      <i class="ri-film-line ri-lg mr-2"></i>
+      {{ isEditMode ? "Editar Proyección" : "Nueva Proyección" }}
+    </h1>
+
+    @if (isLoading) {
+    <div class="flex justify-center items-center py-12">
+      <i class="ri-loader-4-line ri-3x animate-spin text-teal-600"></i>
+    </div>
+    } @else {
+    <form [formGroup]="screeningForm" (ngSubmit)="onSubmit()">
+      <!-- Fecha y Hora -->
+      <div class="flex flex-col md:flex-row gap-6 mb-5">
+        <!-- Fecha -->
+        <div class="w-full mx-2 flex-1">
+          <div
+            class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+          >
+            <i class="ri-calendar-line ri-sm mr-1"></i> Fecha de proyección
+          </div>
+          <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+            <input
+              type="date"
+              id="screeningDate"
+              formControlName="screeningDate"
+              class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+            />
+          </div>
+          <!-- Mensajes de validación -->
+          <div
+            *ngIf="
+              screeningForm.get('screeningDate')?.invalid &&
+              screeningForm.get('screeningDate')?.touched
+            "
+            class="text-red-500 text-xs italic mt-1 ml-1"
+          >
+            <small
+              *ngIf="screeningForm.get('screeningDate')?.errors?.['required']"
+            >
+              <i class="ri-error-warning-line ri-sm mr-1"></i> La fecha es
+              requerida.
+            </small>
+          </div>
+        </div>
+
+        <!-- Hora -->
+        <div class="w-full mx-2 flex-1">
+          <div
+            class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+          >
+            <i class="ri-time-line ri-sm mr-1"></i> Hora de proyección
+          </div>
+          <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+            <input
+              type="time"
+              id="screeningTime"
+              formControlName="screeningTime"
+              class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+            />
+          </div>
+          <!-- Mensajes de validación -->
+          <div
+            *ngIf="
+              screeningForm.get('screeningTime')?.invalid &&
+              screeningForm.get('screeningTime')?.touched
+            "
+            class="text-red-500 text-xs italic mt-1 ml-1"
+          >
+            <small
+              *ngIf="screeningForm.get('screeningTime')?.errors?.['required']"
+            >
+              <i class="ri-error-warning-line ri-sm mr-1"></i> La hora es
+              requerida.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Película -->
+      <div class="w-full mx-2 flex-1 mb-5">
+        <div
+          class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+        >
+          <i class="ri-movie-2-line ri-sm mr-1"></i> Película
+        </div>
+        <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+          <select
+            id="movieId"
+            formControlName="movieId"
+            class="p-1 px-2 appearance-none outline-none w-full text-gray-800 bg-white"
+          >
+            <option value="">Seleccione una película</option>
+            <option *ngFor="let movie of movies" [value]="movie.id">
+              {{ movie.title }}
+            </option>
+          </select>
+        </div>
+        <!-- Mensajes de validación -->
+        <div
+          *ngIf="
+            screeningForm.get('movieId')?.invalid &&
+            screeningForm.get('movieId')?.touched
+          "
+          class="text-red-500 text-xs italic mt-1 ml-1"
+        >
+          <small *ngIf="screeningForm.get('movieId')?.errors?.['required']">
+            <i class="ri-error-warning-line ri-sm mr-1"></i> La película es
+            requerida.
+          </small>
+        </div>
+      </div>
+
+      <!-- Sala -->
+      <div class="w-full mx-2 flex-1 mb-5">
+        <div
+          class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+        >
+          <i class="ri-door-open-line ri-sm mr-1"></i> Sala
+        </div>
+        <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+          <select
+            id="roomId"
+            formControlName="roomId"
+            class="p-1 px-2 appearance-none outline-none w-full text-gray-800 bg-white"
+          >
+            <option value="">Seleccione una sala</option>
+            <option *ngFor="let room of rooms" [value]="room.id">
+              {{ room.name }}
+            </option>
+          </select>
+        </div>
+        <!-- Mensajes de validación -->
+        <div
+          *ngIf="
+            screeningForm.get('roomId')?.invalid &&
+            screeningForm.get('roomId')?.touched
+          "
+          class="text-red-500 text-xs italic mt-1 ml-1"
+        >
+          <small *ngIf="screeningForm.get('roomId')?.errors?.['required']">
+            <i class="ri-error-warning-line ri-sm mr-1"></i> La sala es
+            requerida.
+          </small>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex p-2 mt-8">
+        <a
+          routerLink="/dashboard/screening"
+          class="text-base hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:bg-gray-200 bg-gray-100 text-gray-700 border duration-200 ease-in-out border-gray-300 transition flex items-center"
+        >
+          <i class="ri-arrow-left-line ri-sm mr-1"></i> Volver
+        </a>
+        <div class="flex-auto flex flex-row-reverse">
+          <button
+            type="submit"
+            [disabled]="screeningForm.invalid || isSubmitting"
+            class="text-base ml-2 hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:bg-teal-700 bg-teal-600 text-white border duration-200 ease-in-out border-teal-700 transition flex items-center"
+          >
+            @if (isSubmitting) {
+            <i class="ri-loader-4-line ri-sm mr-1 animate-spin"></i>
+            Procesando... } @else { <i class="ri-save-line ri-sm mr-1"></i>
+            {{ isEditMode ? "Actualizar" : "Guardar" }}
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+    }
   </div>
 </div>

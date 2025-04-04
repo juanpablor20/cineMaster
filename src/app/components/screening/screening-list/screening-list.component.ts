@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './screening-list.component.html',
   styleUrl: './screening-list.component.css'
 })
-export default class ScreeningListComponent implements OnInit {
+export  class ScreeningListComponent implements OnInit {
 
   screenings: Screening[] = [];
   isLoading: boolean = true;

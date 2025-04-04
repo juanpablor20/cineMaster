@@ -1,74 +1,178 @@
-<h1>{{ isEditMode ? 'Editar Cine' : 'Formulario de Cines' }}</h1>
-<form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()">
+<div class="p-5">
+  <!-- Stepper (opcional) -->
+  <div class="mx-4 p-4">
+    <div class="flex items-center">
+      <div class="flex items-center text-teal-600 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600 flex items-center justify-center"
+        >
+          <i class="ri-movie-2-line ri-xl"></i>
+        </div>
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-teal-600"
+        >
+          Información
+        </div>
+      </div>
+      <div
+        class="flex-auto border-t-2 transition duration-500 ease-in-out border-teal-600"
+      ></div>
+      <div class="flex items-center text-gray-500 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center"
+        >
+          <i class="ri-map-pin-line ri-xl"></i>
+        </div>
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
+        >
+          Ubicación
+        </div>
+      </div>
+      <div
+        class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"
+      ></div>
+      <div class="flex items-center text-gray-500 relative">
+        <div
+          class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center"
+        >
+          <i class="ri-image-line ri-xl"></i>
+        </div>
+        <div
+          class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500"
+        >
+          Imagen
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Campo Nombre -->
-    <div class="form-group">
-        <label for="name">Nombre del Cine:</label>
-        <input
-          id="name"
-          type="text"
-          formControlName="name"
-          placeholder="Ingresa el nombre del Cine"
-          class="form-control"
-        />
+  <!-- Formulario -->
+  <div class="mt-8 p-4">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+      <i class="ri-film-line ri-lg mr-2"></i>
+      {{ isEditMode ? "Editar Cine" : "Nuevo Cine" }}
+    </h1>
+
+    <form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()">
+      <!-- Campo Nombre -->
+      <div class="w-full mx-2 flex-1 mb-5">
+        <div
+          class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+        >
+          <i class="ri-building-2-line ri-sm mr-1"></i> Nombre del Cine
+        </div>
+        <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="Ej: Cineplex Centro"
+            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+          />
+        </div>
         <!-- Mensajes de validación -->
-        <div *ngIf="cinemaForm.get('name')?.invalid && cinemaForm.get('name')?.touched" class="error-message">
+        <div
+          *ngIf="
+            cinemaForm.get('name')?.invalid && cinemaForm.get('name')?.touched
+          "
+          class="text-red-500 text-xs italic mt-1 ml-1"
+        >
           <small *ngIf="cinemaForm.get('name')?.errors?.['required']">
-            El nombre es requerido.
+            <i class="ri-error-warning-line ri-sm mr-1"></i> El nombre es
+            requerido.
           </small>
           <small *ngIf="cinemaForm.get('name')?.errors?.['minlength']">
-            El nombre debe tener al menos 3 caracteres.
+            <i class="ri-error-warning-line ri-sm mr-1"></i> Mínimo 3
+            caracteres.
           </small>
         </div>
-    </div>
+      </div>
 
-    <!-- Campo Ubicación -->
-    <div class="form-group">
-        <label for="location">Ubicación:</label>
-        <input
-          id="location"
-          type="text"
-          formControlName="location"
-          placeholder="Ingresa la ubicación del cine"
-          class="form-control"
-        />
+      <!-- Campo Ubicación -->
+      <div class="w-full mx-2 flex-1 mb-5">
+        <div
+          class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+        >
+          <i class="ri-map-pin-line ri-sm mr-1"></i> Ubicación
+        </div>
+        <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+          <input
+            id="location"
+            type="text"
+            formControlName="location"
+            placeholder="Ej: Calle Principal #123"
+            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+          />
+        </div>
         <!-- Mensajes de validación -->
-        <div *ngIf="cinemaForm.get('location')?.invalid && cinemaForm.get('location')?.touched" class="error-message">
+        <div
+          *ngIf="
+            cinemaForm.get('location')?.invalid &&
+            cinemaForm.get('location')?.touched
+          "
+          class="text-red-500 text-xs italic mt-1 ml-1"
+        >
           <small *ngIf="cinemaForm.get('location')?.errors?.['required']">
-            La ubicación es requerida.
+            <i class="ri-error-warning-line ri-sm mr-1"></i> La ubicación es
+            requerida.
           </small>
         </div>
-    </div>
+      </div>
 
-    <!-- Campo URL de Imagen -->
-    <div class="form-group">
-        <label for="imageUrl">URL de la imagen:</label>
-        <input
-          id="imageUrl"
-          type="url"
-          formControlName="imageUrl"
-          placeholder="Ingresa la URL de la imagen del cine"
-          class="form-control"
-        />
+      <!-- Campo URL de Imagen -->
+      <div class="w-full mx-2 flex-1 mb-5">
+        <div
+          class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center"
+        >
+          <i class="ri-image-line ri-sm mr-1"></i> URL de la imagen
+        </div>
+        <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+          <input
+            id="imageUrl"
+            type="url"
+            formControlName="imageUrl"
+            placeholder="Ej: https://ejemplo.com/imagen.jpg"
+            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+          />
+        </div>
         <!-- Mensajes de validación -->
-        <div *ngIf="cinemaForm.get('imageUrl')?.invalid && cinemaForm.get('imageUrl')?.touched" class="error-message">
+        <div
+          *ngIf="
+            cinemaForm.get('imageUrl')?.invalid &&
+            cinemaForm.get('imageUrl')?.touched
+          "
+          class="text-red-500 text-xs italic mt-1 ml-1"
+        >
           <small *ngIf="cinemaForm.get('imageUrl')?.errors?.['required']">
-            La URL de la imagen es requerida.
+            <i class="ri-error-warning-line ri-sm mr-1"></i> La URL es
+            requerida.
           </small>
           <small *ngIf="cinemaForm.get('imageUrl')?.errors?.['pattern']">
-            Por favor ingresa una URL válida.
+            <i class="ri-error-warning-line ri-sm mr-1"></i> URL inválida.
           </small>
         </div>
-    </div>
+      </div>
 
-    <!-- Botón de envío -->
-    <button type="submit" [disabled]="cinemaForm.invalid" class="submit-btn">
-        {{ isEditMode ? 'Actualizar Cine' : 'Guardar Cine' }}
-    </button>
-    
-    <!-- Botón para cancelar/volver -->
-     <a routerLink="/dashboard/cinemas" class="cancel-btn">
-        Volver
-    </a>
-    
-</form>
+      <!-- Botones -->
+      <div class="flex p-2 mt-8">
+        <a
+          routerLink="/dashboard/cinemas"
+          class="text-base hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:bg-gray-200 bg-gray-100 text-gray-700 border duration-200 ease-in-out border-gray-300 transition flex items-center"
+        >
+          <i class="ri-arrow-left-line ri-sm mr-1"></i> Volver
+        </a>
+        <div class="flex-auto flex flex-row-reverse">
+          <button
+            type="submit"
+            [disabled]="cinemaForm.invalid"
+            class="text-base ml-2 hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:bg-teal-700 bg-teal-600 text-white border duration-200 ease-in-out border-teal-700 transition flex items-center"
+          >
+            <i class="ri-save-line ri-sm mr-1"></i>
+            {{ isEditMode ? "Actualizar" : "Guardar" }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,71 +1,118 @@
-<h1>{{ isEditMode ? "Editar Pelicula" : "Formulario de Peliculas" }}</h1>
-
-<form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="name">Nombre de la Sala</label>
-    <input
-      id="name"
-      type="text"
-      formControlName="name"
-      placeholder="ingresa el nombre de la Sala"
-      class="form-contron"
-    />
-
-    <div
-      *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched"
-      class="error-message"
-    >
-      <small *ngIf="roomForm.get('name')?.errors?.['required']">
-        El titulo es requerido
-      </small>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="capacity">Capacidad de la sala</label>
-    <input
-      id="capacity"
-      type="text"
-      formControlName="capacity"
-      placeholder="Ingresa la Capacidad dela sala"
-      class="form-control"
-    />
-
-    <div
-      *ngIf="
-        roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched
-      "
-      class="error-message"
-    >
-      <small *ngIf="roomForm.get('capacity')?.errors?.['required']">
-        El Genero es requerido
-      </small>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="cinemaId">Cine</label>
-    <select id="cinemaId" formControlName="cinemaId" class="form-control">
-      <option value="">Seleccione un cine</option>
-      <option *ngFor="let cine of cinemas" [value]="cine.id">
-        {{ cine.name }}
-      </option>
-    </select>
-
-    <div
-      *ngIf="
-        roomForm.get('cinemaId')?.invalid && roomForm.get('cinemaId')?.touched
-      "
-      class="error-message"
-    >
-      <small *ngIf="roomForm.get('cinemaId')?.errors?.['required']">
-        El cine es requerido
-      </small>
-    </div>
+<div class="p-5">
+  <!-- Stepper -->
+  <div class="mx-4 p-4">
+      <div class="flex items-center">
+          <div class="flex items-center text-teal-600 relative">
+              <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600 flex items-center justify-center">
+                  <i class="ri-door-line ri-xl"></i>
+              </div>
+              <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-teal-600">Sala</div>
+          </div>
+          <div class="flex-auto border-t-2 transition duration-500 ease-in-out border-teal-600"></div>
+          <div class="flex items-center text-gray-500 relative">
+              <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center">
+                  <i class="ri-group-line ri-xl"></i>
+              </div>
+              <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500">Capacidad</div>
+          </div>
+          <div class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"></div>
+          <div class="flex items-center text-gray-500 relative">
+              <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 flex items-center justify-center">
+                  <i class="ri-building-line ri-xl"></i>
+              </div>
+              <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500">Cine</div>
+          </div>
+      </div>
   </div>
 
-  <button type="submit" [disabled]="roomForm.invalid" class="submit-btn">
-    {{ isEditMode ? "Actualizar Cine" : "Guardar Cine" }}
-  </button>
+  <!-- Formulario -->
+  <div class="mt-8 p-4">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+          <i class="ri-door-open-line ri-lg mr-2"></i>
+          {{ isEditMode ? 'Editar Sala' : 'Nueva Sala' }}
+      </h1>
+      
+      <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+          <!-- Campo Nombre -->
+          <div class="w-full mx-2 flex-1 mb-5">
+              <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center">
+                  <i class="ri-text ri-sm mr-1"></i> Nombre de la Sala
+              </div>
+              <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+                  <input
+                      id="name"
+                      type="text"
+                      formControlName="name"
+                      placeholder="Ej: Sala Premier"
+                      class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  />
+              </div>
+              <!-- Mensajes de validación -->
+              <div *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched" class="text-red-500 text-xs italic mt-1 ml-1">
+                  <small *ngIf="roomForm.get('name')?.errors?.['required']">
+                      <i class="ri-error-warning-line ri-sm mr-1"></i> El nombre es requerido.
+                  </small>
+              </div>
+          </div>
 
-  <!-- Botón para cancelar/volver -->
-  <a routerLink="/dashboard/salas" class="cancel-btn"> Volver </a>
-</form>
+          <!-- Campo Capacidad -->
+          <div class="w-full mx-2 flex-1 mb-5">
+              <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center">
+                  <i class="ri-user-line ri-sm mr-1"></i> Capacidad
+              </div>
+              <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+                  <input
+                      id="capacity"
+                      type="number"
+                      formControlName="capacity"
+                      placeholder="Ej: 120"
+                      class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  />
+              </div>
+              <!-- Mensajes de validación -->
+              <div *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched" class="text-red-500 text-xs italic mt-1 ml-1">
+                  <small *ngIf="roomForm.get('capacity')?.errors?.['required']">
+                      <i class="ri-error-warning-line ri-sm mr-1"></i> La capacidad es requerida.
+                  </small>
+              </div>
+          </div>
+
+          <!-- Campo Cine -->
+          <div class="w-full mx-2 flex-1 mb-5">
+              <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase flex items-center">
+                  <i class="ri-building-2-line ri-sm mr-1"></i> Cine
+              </div>
+              <div class="bg-white my-2 p-1 flex border border-gray-200 rounded">
+                  <select
+                      id="cinemaId"
+                      formControlName="cinemaId"
+                      class="p-1 px-2 appearance-none outline-none w-full text-gray-800 bg-white"
+                  >
+                      <option value="">Seleccione un cine</option>
+                      <option *ngFor="let cine of cinemas" [value]="cine.id">{{ cine.name }}</option>
+                  </select>
+              </div>
+              <!-- Mensajes de validación -->
+              <div *ngIf="roomForm.get('cinemaId')?.invalid && roomForm.get('cinemaId')?.touched" class="text-red-500 text-xs italic mt-1 ml-1">
+                  <small *ngIf="roomForm.get('cinemaId')?.errors?.['required']">
+                      <i class="ri-error-warning-line ri-sm mr-1"></i> Debe seleccionar un cine.
+                  </small>
+              </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex p-2 mt-8">
+              <a routerLink="/dashboard/salas" class="text-base hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                  hover:bg-gray-200 bg-gray-100 text-gray-700 border duration-200 ease-in-out border-gray-300 transition flex items-center">
+                  <i class="ri-arrow-left-line ri-sm mr-1"></i> Volver
+              </a>
+              <div class="flex-auto flex flex-row-reverse">
+                  <button type="submit" [disabled]="roomForm.invalid" class="text-base ml-2 hover:scale-105 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                      hover:bg-teal-700 bg-teal-600 text-white border duration-200 ease-in-out border-teal-700 transition flex items-center">
+                      <i class="ri-save-line ri-sm mr-1"></i> {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+                  </button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
