@@ -7,7 +7,7 @@
       <a (click)="changeVideo('drama')">Drama</a>
       <a (click)="changeVideo('terror')">Terror</a>
       <a (click)="changeVideo('infantil')">Infantil</a>
-      <a href="#">Login</a>
+      <a routerLink="login">Login</a>
     </div>
   </nav>
 
@@ -19,3 +19,7 @@
     <h1>{{ currentVideoTitle }}</h1>
   </div>
 </div>
+
+<app-hero-movie />
+
+<app-hero-cinemas />

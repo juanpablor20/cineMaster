@@ -1,0 +1,7 @@
+
+<h1>las mejores peliculas </h1>
+  <section>
+    @for(item of ImgMovies; track item){
+        <img [ngSrc]="item" alt="peliculas" width="400" height="200" loading="lazy">
+    }
+  </section>
