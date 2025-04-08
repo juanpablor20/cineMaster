@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HeroMovieComponent } from '../shared/hero-movie/hero-movie.component';
 import { HeroCinemasComponent } from '../shared/hero-cinemas/hero-cinemas.component';
+import { ProbandoComponent } from '../probando/probando.component';
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink, HeroMovieComponent, HeroCinemasComponent],
+  imports: [RouterLink, HeroMovieComponent, HeroCinemasComponent, ProbandoComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })

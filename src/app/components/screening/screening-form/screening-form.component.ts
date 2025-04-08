@@ -1,15 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ScreeningService } from '../../../core/services/screening.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -26,15 +18,7 @@ import { Screening } from '../../../core/interface/screening.interface';
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatProgressSpinnerModule
+   
   ],
   templateUrl: './screening-form.component.html',
 })
