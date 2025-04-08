@@ -1,14 +1,73 @@
-<h1 class="text-3xl font-bold text-center my-8">Todos los cines disponibles</h1>
+<div class="bg-gray-900 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+  <!-- Encabezado -->
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-8 text-white bg-gradient-to-r from-purple-600 to-indigo-600 py-4 px-6 rounded-xl shadow-lg inline-block transform transition-all hover:scale-105">
+      <i class="ri-movie-2-line align-middle mr-2"></i>
+      Todos los cines disponibles
+    </h1>
 
-<div #cineSection class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-  <div *ngFor="let cine of cines; index as i; trackBy: trackByFn" 
-       [@cardAnimation]="animationStates[i]" 
-       class="card bg-white rounded-lg shadow-md overflow-hidden">
-    <img [src]="cine.imageUrl" alt="{{cine.title}}" class="w-full h-48 object-cover">
-    <div class="p-5">
-      <h2 class="text-2xl font-bold">{{cine.title}}</h2>
-      <p class="mt-2 text-lg font-semibold text-gray-600">{{cine.autor}}</p>
-      <p class="mt-1 text-gray-500">{{cine.descripcion}}</p>
+    <!-- Contenedor principal -->
+    <div class="relative">
+      <!-- Mensaje de carga -->
+      <div *ngIf="isLoading" class="text-white text-center py-12">
+        <div class="inline-flex items-center">
+          <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span class="text-xl">Cargando cines...</span>
+        </div>
+      </div>
+
+      <!-- Mensaje cuando no hay cines -->
+      <div *ngIf="!isLoading && cinemas.length === 0" class="text-center py-12">
+        <div class="inline-block p-6 bg-gray-800 rounded-xl shadow-lg">
+          <i class="ri-emotion-sad-line text-4xl text-purple-400 mb-3"></i>
+          <h3 class="text-xl font-medium text-white">No se encontraron cines disponibles</h3>
+          <p class="text-gray-400 mt-2">Intenta recargar la página o verificar tu conexión</p>
+        </div>
+      </div>
+
+      <!-- Grid de cines -->
+      <div #cineSection class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
+           [class.opacity-0]="isLoading">
+        <div *ngFor="let cine of cinemas; index as i; trackBy: trackByFn" 
+             [@cardAnimation]="animationStates[i]" 
+             class="card bg-gray-800 rounded-xl shadow-lg overflow-hidden transform transition-all hover:-translate-y-1 hover:shadow-xl">
+          <!-- Imagen -->
+          <div class="overflow-hidden h-48 relative">
+            <img [src]="cine.imageUrl" alt="{{cine.name}}" 
+                 class="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                 onerror="this.src='assets/default-cinema.jpg'">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
+          </div>
+          
+          <!-- Contenido de la tarjeta -->
+          <div class="p-5">
+            <!-- Título con icono -->
+            <h2 class="text-xl font-bold text-white flex items-center">
+              <i class="ri-film-line text-purple-400 mr-2"></i>
+              {{cine.name }}
+            </h2>
+            
+            <!-- Ubicación -->
+            <p class="mt-2 text-purple-300 flex items-center">
+              <i class="ri-map-pin-line mr-2"></i>
+              {{cine.location }}
+            </p>
+            
+            <!-- Botón -->
+            <div class="mt-4">
+              <!-- <button 
+                class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-2 px-4 rounded-lg text-sm hover:from-purple-600 hover:to-indigo-600 transition-all flex items-center justify-center"
+                (click)="viewFunctions(cine)">
+                <i class="ri-ticket-line mr-2"></i>
+                Ver funciones
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

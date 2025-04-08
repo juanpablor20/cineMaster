@@ -1,6 +1,8 @@
-import { Component, ElementRef, ViewChild, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, Inject, PLATFORM_ID, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { trigger, state, style, animate, transition, stagger, query, sequence } from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Cinema } from '../../core/interface/cinemas';
+import { CinemaService } from '../../core/services/cinema.service';
 
 @Component({
   selector: 'app-hero-cinemas',
@@ -27,33 +29,42 @@ import { trigger, state, style, animate, transition, stagger, query, sequence } 
     ])
   ]
 })
-export class HeroCinemasComponent implements AfterViewInit {
-  @ViewChild('cineSection') cineSection!: ElementRef;
-  animationStates: string[] = ['hide', 'hide', 'hide'];
+export class HeroCinemasComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('cineSection') cineSection!: ElementRef<HTMLElement>;
+  animationStates: string[] = [];
   private isAnimating = false;
-  
-  cines = [
-    {
-      title: 'El poder de la lámpara',
-      autor: 'by John Smith',
-      descripcion: 'Lorem ipsum carrots, enhanced undergraduate developer, but they do occaecat time and vitality...',
-      imageUrl: 'https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=859&q=80'
-    },
-    {
-      title: 'El poder de la lámpara 2',
-      autor: 'by John Smith',
-      descripcion: 'Lorem ipsum carrots, enhanced undergraduate developer, but they do occaecat time and vitality...',
-      imageUrl: 'https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=859&q=80'
-    },
-    {
-      title: 'El poder de la lámpara 3',
-      autor: 'by John Smith',
-      descripcion: 'Lorem ipsum carrots, enhanced undergraduate developer, but they do occaecat time and vitality...',
-      imageUrl: 'https://images.unsplash.com/photo-1577982787983-e07c6730f2d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=859&q=80'
-    },
-  ];
+  cinemas: Cinema[] = [];
+  isLoading = true;
+  private observer: IntersectionObserver | null = null;
+  private visibilityTimeout: any = null;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private cinemaService: CinemaService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  ngOnInit() {
+    this.loadCinemas();
+  }
+
+  loadCinemas(): void {
+    this.cinemaService.getCinemas().subscribe({
+      next: (response: any) => {
+        this.cinemas = Array.isArray(response) ? response : response.data || response.results || [];
+        this.animationStates = new Array(this.cinemas.length).fill('hide');
+        this.isLoading = false;
+        
+        // Verificar visibilidad después de que la vista se haya actualizado
+        if (isPlatformBrowser(this.platformId)) {
+          this.visibilityTimeout = setTimeout(() => this.checkVisibility(), 300);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading cinemas:', error);
+        this.isLoading = false;
+      }
+    });
+  }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -61,8 +72,19 @@ export class HeroCinemasComponent implements AfterViewInit {
     }
   }
 
-  setupScrollAnimation() {
-    const observer = new IntersectionObserver((entries) => {
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    if (this.visibilityTimeout) {
+      clearTimeout(this.visibilityTimeout);
+    }
+  }
+
+  private setupScrollAnimation() {
+    if (!this.cineSection?.nativeElement) return;
+
+    this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !this.isAnimating) {
           this.showCards();
@@ -72,27 +94,44 @@ export class HeroCinemasComponent implements AfterViewInit {
       });
     }, { 
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -100px 0px'
     });
 
-    if (this.cineSection?.nativeElement) {
-      observer.observe(this.cineSection.nativeElement);
+    this.observer.observe(this.cineSection.nativeElement);
+  }
+
+  private checkVisibility() {
+    if (!this.cineSection?.nativeElement || !isPlatformBrowser(this.platformId)) return;
+    
+    const element = this.cineSection.nativeElement;
+    if (typeof element.getBoundingClientRect !== 'function') return;
+    
+    const rect = element.getBoundingClientRect();
+    const isVisible = (
+      rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom >= 0
+    );
+    
+    if (isVisible && !this.isAnimating && this.animationStates.length > 0) {
+      this.showCards();
     }
   }
 
   showCards() {
+    if (this.isAnimating || this.animationStates.length === 0) return;
+    
     this.isAnimating = true;
-    // Reset all to hide first
     this.animationStates = this.animationStates.map(() => 'hide');
     
-    // Animate each card with delay
     this.animationStates.forEach((_, index) => {
       setTimeout(() => {
-        this.animationStates[index] = 'show';
+        if (index < this.animationStates.length) {
+          this.animationStates[index] = 'show';
+        }
         if (index === this.animationStates.length - 1) {
           this.isAnimating = false;
         }
-      }, index * 150); // 150ms delay between each card
+      }, index * 150);
     });
   }
 

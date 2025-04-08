@@ -1,62 +1,19 @@
-/* Estilos generales */
+/* Agregar en tu archivo CSS global o del componente */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .video-hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Navbar */
-.navbar {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-}
-
-.nav-links a {
-  color: white;
-  margin: 0 15px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: color 0.3s;
-}
-.logo{
-  color: white;
-  margin: 0 15px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: color 0.3s;
-
-}
-
-.nav-links a:hover {
-  color: #ff0000;
-}
-
-/* Video de fondo */
-.video-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Overlay del título */
-.video-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  text-shadow: 2px 2px 5px #000;
-}
-
-.video-overlay h1 {
-  font-size: 3rem;
+  min-height: 100vh;
 }

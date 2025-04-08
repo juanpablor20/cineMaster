@@ -1,9 +1,20 @@
+<div class="bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Título mejorado pero discreto -->
+  <h1 class="text-3xl font-bold text-center mb-8 text-white bg-gradient-to-r from-purple-600 to-indigo-600 py-4 px-6 rounded-xl shadow-lg inline-block">
+    <i class="ri-movie-2-line align-middle mr-2"></i>
+   Proximos estrenos
+  </h1>
 
-
-<h1 class="text-3xl font-bold text-center my-8">las mejores peliculas</h1>
-
-  <section>
+  <!-- Galería que mantiene tu efecto original pero mejorado -->
+  <section class="flex justify-center items-center gap-1 sm:gap-2 w-[90%] mx-auto h-[450px]">
     @for(item of ImgMovies; track item){
-        <img [src]="item" alt="peliculas">
+      <img 
+        [src]="item" 
+        alt="Próximas películas"
+        class="h-full w-0 flex-grow object-cover opacity-80 transition-all duration-500 ease-out rounded-sm hover:rounded-lg hover:cursor-crosshair hover:w-[300px] hover:opacity-100 hover:contrast-125 hover:shadow-lg hover:shadow-purple-500/20"
+      >
     }
   </section>
+</div>
+
+
