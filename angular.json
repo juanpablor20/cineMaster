@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "prerender": {
+              "discoverRoutes": false,
+              "routesFile": "prerender-routes.txt"
+            },
             "outputPath": "dist/cine-master-pro",
             "index": "src/index.html",
             "browser": "src/main.ts",

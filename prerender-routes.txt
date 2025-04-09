@@ -1,0 +1,13 @@
+/dashboard/editar-cine/1
+/dashboard/editar-cine/2
+/dashboard/editar-cine/3
+/dashboard/editar-cine/4
+/dashboard/editar-cine/5
+/dashboard/editar-pelicula/1
+/dashboard/editar-pelicula/2
+/dashboard/editar-pelicula/3
+/dashboard/editar-pelicula/4
+/dashboard/editar-sala/1
+/dashboard/editar-sala/2
+/dashboard/editar-screening/1
+/dashboard/editar-screening/2
